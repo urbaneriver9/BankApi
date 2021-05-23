@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS CLIENTS CASCADE;
+
+CREATE TABLE IF NOT EXISTS CLIENTS
+(
+    ID LONG NOT NULL AUTO_INCREMENT,
+    Surname VARCHAR(255) NOT NULL,
+    Name VARCHAR(255) NOT NULL,
+    Patronymic VARCHAR(255),
+    PhoneNumber VARCHAR(255) NOT NULL,
+    PRIMARY KEY (ID)
+);
+
+
+insert into CLIENTS (Surname, Name, Patronymic, PhoneNumber) VALUES ( '1','2','3','4' );
