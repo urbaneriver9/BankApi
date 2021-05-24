@@ -1,44 +1,50 @@
 package dao.impl;
 
 import dao.CardDao;
-import db.DataSource;
 import db.H2DataSourceImpl;
 import domain.Card;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class CardDaoImpl implements CardDao {
 
-    private final String SQL_INSERT = "INSERT INTO CARDS (NUMBER, ACCOUNTNUMBER, CLIENTID) VALUES (?, ?, ?)";
-    private final String SQL_GET_BY_NUMBER = "SELECT * FROM CARDS WHERE NUMBER = ?";
     Logger log = Logger.getLogger(CardDaoImpl.class.getName());
 
+    private final String SQL_INSERT = "INSERT INTO CARDS (NUMBER, ACCOUNTNUMBER, CLIENTID) VALUES (?, ?, ?)";
+    private final String SQL_GET_BY_NUMBER = "SELECT * FROM CARDS WHERE NUMBER = ?";
+    private final String SQL_GET_BY_ACCOUNTNUMBER = "SELECT * FROM CARDS WHERE ACCOUNTNUMBER = ?";
+
+
+
     @Override
-    public void insert(Card card) throws SQLException {
+    public String insert(Card card) throws SQLException {
+        try(Connection connection = H2DataSourceImpl.createConnection()) {
 //            Savepoint savepoint = connection.setSavepoint("Card ready to be added.");
-        try (Connection connection = H2DataSourceImpl.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT)) {
 
-            connection.setAutoCommit(false);
+                connection.setAutoCommit(false);
 
-            preparedStatement.setString(1, card.getNumber());
-            preparedStatement.setString(2, card.getAccountNumber());
-            preparedStatement.setLong(3, card.getClientID());
-            preparedStatement.executeUpdate();
+                preparedStatement.setString(1, card.getNumber());
+                preparedStatement.setString(2, card.getAccountNumber());
+                preparedStatement.setLong(3, card.getClientID());
+                preparedStatement.executeUpdate();
 
-            connection.commit();
+                connection.commit();
 
-            log.info("\nCard with ID " + card.getNumber() + " added" +
-                    "\n======================================");
-        } catch (SQLException exception) {
+                log.info("\nCard with number " + card.getNumber() + " added" +
+                        "\n======================================");
+                return card.getNumber();
+            } catch (SQLException exception) {
 //                connection.rollback(savepoint);
-            exception.printStackTrace();
+                exception.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+        return new String();
     }
 
 
@@ -66,17 +72,40 @@ public class CardDaoImpl implements CardDao {
                 card.setNumber(resultSet.getString("Number"));
                 card.setClientID(resultSet.getLong("ClientID"));
                 card.setAccountNumber(resultSet.getString("AccountNumber"));
-                card.setValid(resultSet.getBoolean("IsOpen"));
+                card.setValid(resultSet.getBoolean("IsValid"));
 
                 resultSet.close();
 
                 return card;
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
-
         return new Card();
+    }
+
+    @Override
+    public List<Card> getAllCardsByAccountNumber(String accountNumber) {
+        try(Connection connection = H2DataSourceImpl.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_BY_ACCOUNTNUMBER)){
+
+            preparedStatement.setString(1, accountNumber);
+            ArrayList<Card> allCards = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+                Card card = new Card();
+                card.setNumber(resultSet.getString("Number"));
+                card.setAccountNumber(resultSet.getString("AccountNumber"));
+                card.setClientID(resultSet.getLong("ClientID"));
+                card.setValid(resultSet.getBoolean("IsValid"));
+                allCards.add(card);
+            }
+            return allCards;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override

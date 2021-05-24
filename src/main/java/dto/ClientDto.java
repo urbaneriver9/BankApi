@@ -12,7 +12,7 @@ public class ClientDto {
     private String patronymic;
     private String phoneNumber;
     private List<Account> accounts;
-    private List<Client> counterparties;
+//    private List<Client> counterparties;
 
     public long getId() {
         return id;
@@ -62,11 +62,12 @@ public class ClientDto {
         this.accounts = accounts;
     }
 
-    public List<Client> getCounterparties() {
-        return counterparties;
-    }
+//    public List<Client> getCounterparties() {
+//        return counterparties;
+//    }
+//
+//    public void setCounterparties(List<Client> counterparties) {
+//        this.counterparties = counterparties;
+//    }
 
-    public void setCounterparties(List<Client> counterparties) {
-        this.counterparties = counterparties;
-    }
 }

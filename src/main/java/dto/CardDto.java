@@ -1,19 +1,11 @@
 package dto;
 
 public class CardDto {
-    private long id;
     private long clientID;
     private String accountNumber;
     private String number;
     private boolean isValid;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public long getClientID() {
         return clientID;
@@ -47,14 +39,6 @@ public class CardDto {
         isValid = valid;
     }
 
-    @Override
-    public String toString() {
-        return "CardDto{" +
-                "id=" + id +
-                ", clientID=" + clientID +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", number='" + number + '\'' +
-                ", isValid=" + isValid +
-                '}';
-    }
 }
+
+

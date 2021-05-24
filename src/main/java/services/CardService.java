@@ -1,8 +1,11 @@
 package services;
 
-import dto.CardDto;
+import domain.Card;
 import dto.CardOrderRequestDto;
 
+import java.util.List;
+
 public interface CardService {
-    void cardOrder(CardOrderRequestDto cardOrderDto);
+    String cardOrder(CardOrderRequestDto cardOrderDto);
+    List<Card> getCardsByAccountNumber(String accountNumber);
 }

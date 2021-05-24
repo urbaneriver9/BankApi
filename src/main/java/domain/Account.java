@@ -11,21 +11,6 @@ public class Account {
     private boolean isOpen;
     private List<Card> cards;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getClientID() {
-        return clientID;
-    }
-
-    public void setClientID(long clientID) {
-        this.clientID = clientID;
-    }
 
     public String getNumber() {
         return number;

@@ -10,7 +10,6 @@ public class CardMapperImpl implements CardMapper {
     @Override
     public Card map(CardDto cardDto) {
         Card card = new Card();
-        card.setId(cardDto.getId());
         card.setNumber(cardDto.getNumber());
         card.setAccountNumber(cardDto.getAccountNumber());
         card.setClientID(card.getClientID());
@@ -21,7 +20,6 @@ public class CardMapperImpl implements CardMapper {
     @Override
     public CardDto map(Card card) {
         CardDto cardDto = new CardDto();
-        cardDto.setId(card.getId());
         cardDto.setNumber(card.getNumber());
         cardDto.setAccountNumber(card.getAccountNumber());
         cardDto.setClientID(card.getClientID());

@@ -3,7 +3,6 @@ package services.impl;
 import dao.CardDao;
 import dao.impl.CardDaoImpl;
 import domain.Card;
-import dto.CardDto;
 import dto.CardOrderRequestDto;
 import services.CardService;
 import util.mapper.CardMapper;
@@ -11,29 +10,35 @@ import util.mapper.impl.CardMapperImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
 public class CardServiceImpl implements CardService {
 
     private static final int CARD_NUMBER_LENGTH = 16;
-    private static final int CARD_DIGITS = 10;
     CardDao cardDao = new CardDaoImpl();
 
     CardMapper cardMapper = new CardMapperImpl();
 
     @Override
-    public void cardOrder(CardOrderRequestDto cardOrderDto){
+    public String cardOrder(CardOrderRequestDto cardOrderDto){
         Card card = cardMapper.map(cardOrderDto);
-        card.setNumber(generateRandom());
+        String cardNumber = generateRandom();
+        card.setNumber(cardNumber);
 
         try {
-            cardDao.insert(card);
-        } catch (SQLException exception) {
+            return cardDao.insert(card);
+
+        } catch (SQLException | IOException exception) {
             exception.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return cardNumber;
     }
+
+    @Override
+    public List<Card> getCardsByAccountNumber(String accountNumber) {
+        return cardDao.getAllCardsByAccountNumber(accountNumber);
+    }
+
 
     private static String generateRandom() {
         StringBuilder stringBuilder = new StringBuilder();

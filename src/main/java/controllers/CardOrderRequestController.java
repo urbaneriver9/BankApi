@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.CardDao;
 import dao.impl.CardDaoImpl;
 import domain.Card;
-import dto.CardDto;
 import dto.CardOrderRequestDto;
 import server.http.impl.LocalHttpServerImpl;
 import services.CardService;
@@ -18,8 +17,8 @@ import java.io.*;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CardOrderHandler implements HttpHandler {
-    private static final Logger log = Logger.getLogger(CardOrderHandler.class.getName());
+public class CardOrderRequestController implements HttpHandler {
+    private static final Logger log = Logger.getLogger(CardOrderRequestController.class.getName());
     private final CardService cardService = new CardServiceImpl();
     private final CardDao cardDao = new CardDaoImpl();
 
@@ -39,12 +38,11 @@ public class CardOrderHandler implements HttpHandler {
                 String accountNumber = map.get("accountNumber");
                 CardOrderRequestDto cardOrderRequestDto = new CardOrderRequestDto(clientId, accountNumber);
 
-                cardService.cardOrder(cardOrderRequestDto);
-                Card card = cardDao.getCardByNumber(accountNumber);
-                System.out.println(accountNumber);
+                String cardNumber= cardService.cardOrder(cardOrderRequestDto);
+                Card card = cardDao.getCardByNumber(cardNumber);
 
                 String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(card);
-                exchange.sendResponseHeaders(LocalHttpServerImpl.STATUS_OK, jsonResponse.length());
+                exchange.sendResponseHeaders(LocalHttpServerImpl.STATUS_OK, jsonResponse.getBytes().length);
                 OutputStream outputStream = exchange.getResponseBody();
                 outputStream.write(jsonResponse.getBytes());
                 log.info("POST request with payload " + map);

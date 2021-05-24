@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface Dao<T> {
-    void insert(T t) throws SQLException, IOException;
+    String insert(T t) throws SQLException, IOException;
 
     List<T> getAll() throws SQLException;
 

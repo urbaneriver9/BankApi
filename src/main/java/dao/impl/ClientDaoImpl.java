@@ -1,7 +1,6 @@
 package dao.impl;
 
 import dao.ClientDao;
-import db.DataSource;
 import db.H2DataSourceImpl;
 import domain.Client;
 
@@ -14,10 +13,11 @@ import java.util.List;
 
 public class ClientDaoImpl implements ClientDao {
 
-    private final String SQL_GET_BY_ID = "SELECT * FROM CLIENTS WHERE CLIENTID = ?";
+    private final String SQL_GET_BY_ID = "SELECT * FROM CLIENTS WHERE ID = ?";
 
     @Override
-    public void insert(Client client) throws SQLException, IOException {
+    public String insert(Client client) throws SQLException, IOException {
+        return null;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ClientDaoImpl implements ClientDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-
+                System.out.println("1");
                 client.setId(resultSet.getLong("ID"));
                 client.setSurname(resultSet.getString("Surname"));
                 client.setName(resultSet.getString("Name"));
@@ -43,7 +43,7 @@ public class ClientDaoImpl implements ClientDao {
                 client.setPhoneNumber(resultSet.getNString("PhoneNumber"));
 
                 resultSet.close();
-
+                System.out.println(client.toString());
                 return client;
             }
         } catch (SQLException throwables) {

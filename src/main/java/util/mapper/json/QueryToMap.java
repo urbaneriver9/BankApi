@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class QueryToMap {
 
-    public Map<String, String> queryToMap(String query) {
+    public static Map<String, String> queryToMap(String query) {
         if(query == null) {
             return null;
         }

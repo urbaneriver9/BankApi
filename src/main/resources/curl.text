@@ -1,1 +1,6 @@
-curl -X POST http://localhost:8000/test -H "Content-Type: application/json" -d @/Users/a19187978/IdeaProjects/SberTask/BankApi/src/main/resources/json/CardOrder.json
+curl -X POST http://localhost:8000/cardorder -H "Content-Type: application/json" -d @/Users/a19187978/IdeaProjects/SberTask/BankApi/src/main/resources/json/CardOrder.json
+curl -X POST http://localhost:8000/topup -H "Content-Type: application/json" -d @/Users/a19187978/IdeaProjects/SberTask/BankApi/src/main/resources/json/TopUp.json
+
+curl -X GET "http://localhost:8000/getbalance/check?accountNumber=32877207638913434255"
+curl -X GET "http://localhost:8000/allcards/check?id=1"
+

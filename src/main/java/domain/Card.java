@@ -1,19 +1,12 @@
 package domain;
 
+import java.util.Objects;
+
 public class Card {
-    private long id;
     private long clientID;
     private String accountNumber;
     private String number;
     private boolean isValid;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public long getClientID() {
         return clientID;
@@ -46,4 +39,13 @@ public class Card {
     public void setValid(boolean valid) {
         isValid = valid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return getClientID() == card.getClientID() && isValid() == card.isValid() && Objects.equals(getAccountNumber(), card.getAccountNumber()) && Objects.equals(getNumber(), card.getNumber());
+    }
+
 }

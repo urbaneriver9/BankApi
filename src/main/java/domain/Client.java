@@ -59,8 +59,19 @@ public class Client {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
-
-//    public List<Client> getCounterparties() {
+//
+//    @Override
+//    public String toString() {
+//        return "Client{" +
+//                "id=" + id +
+//                ", surname='" + surname + '\'' +
+//                ", name='" + name + '\'' +
+//                ", patronymic='" + patronymic + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", accounts=" + accounts +
+//                '}';
+//    }
+    //    public List<Client> getCounterparties() {
 //        return counterparties;
 //    }
 //

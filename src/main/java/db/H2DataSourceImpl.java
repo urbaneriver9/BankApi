@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 public class H2DataSourceImpl implements DataSource {
 
+// ToDo: refactor all files paths (delete up to "src")
     private static final String CONFIG_PATH = "/Users/a19187978/IdeaProjects/SberTask/BankApi/src/" +
             "main/resources/database/bank.properties";
     private static final String CLIENTS_DB = "/Users/a19187978/IdeaProjects/SberTask/BankApi/src/" +
