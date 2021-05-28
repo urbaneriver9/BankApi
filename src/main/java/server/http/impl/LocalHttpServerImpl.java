@@ -24,7 +24,7 @@ public class LocalHttpServerImpl implements LocalHttpServer { //TODO: close conn
     static ClientInfoController clientInfoController = new ClientInfoController();
     static TopUpController topUpController  = new TopUpController();
 
-    private static Logger log = Logger.getLogger(LocalHttpServerImpl.class.getName());
+    private static final Logger log = Logger.getLogger(LocalHttpServerImpl.class.getName());
 
     static {
         try{

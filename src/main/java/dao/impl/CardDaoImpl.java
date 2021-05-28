@@ -22,7 +22,7 @@ public class CardDaoImpl implements CardDao {
     @Override
     public String insert(Card card) throws SQLException {
         try(Connection connection = H2DataSourceImpl.createConnection()) {
-//            Savepoint savepoint = connection.setSavepoint("Card ready to be added.");
+            Savepoint savepoint = connection.setSavepoint("Card ready to be added.");
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT)) {
 
                 connection.setAutoCommit(false);
@@ -38,7 +38,7 @@ public class CardDaoImpl implements CardDao {
                         "\n======================================");
                 return card.getNumber();
             } catch (SQLException exception) {
-//                connection.rollback(savepoint);
+                connection.rollback(savepoint);
                 exception.printStackTrace();
             }
         } catch (SQLException throwables) {

@@ -19,7 +19,7 @@ class CardOrderRequestControllerTest {
     void handle() throws IOException {
 //        String url ="http://http://localhost:8000/cardorder";
 //        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-//        connection.setRequestProperty("Content-Type:", "application/json");
+//        connection.setRequestProperty("Content-Type", "application/json");
 //        connection.
     }
 }
